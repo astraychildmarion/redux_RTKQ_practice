@@ -1,33 +1,34 @@
-import React from 'react';
-import { useState } from 'react';
+import PropTypes from 'prop-types';
 
-const Album = ({ name, imageUrl = '', tracks = [] }) => {
-	const [showTrack, setShowTrack] = useState(false);
+const Album = ({ name, imageUrl = '', tracks = [], clickTrack = null }) => {
 	const handleShowTrack = () => {
-		setShowTrack((prev) => !prev);
-	};
-
-	const tracksGenerator = (tracks) => {
-		tracks.items.map((track) => <li key={track.name}>{track.name}</li>);
+		if (clickTrack) {
+			clickTrack(tracks.items);
+		}
 	};
 
 	return (
 		<div>
 			<div key={name}>
 				<h5>{name}</h5>
-				<img className="rounded-full" src={imageUrl} />
-				<button
-					className="bg-slate-400 p-2 rounded-md"
-					onClick={handleShowTrack}
-				>
-					Show track
-				</button>
-				<ol className={showTrack ? '' : 'hidden'}>
-					{tracks.length > 0 ? tracksGenerator(tracks) : 'No tracks'}
-				</ol>
+				<img className="w-36" src={imageUrl} />
+				{tracks.total > 0 && (
+					<button
+						className="bg-slate-400 p-2 rounded-md"
+						onClick={handleShowTrack}
+					>
+						Show track
+					</button>
+				)}
 			</div>
 		</div>
 	);
+};
+Album.propTypes = {
+	name: PropTypes.string,
+	imageUrl: PropTypes.string,
+	tracks: PropTypes.array,
+	clickTrack: PropTypes.func,
 };
 
 export default Album;

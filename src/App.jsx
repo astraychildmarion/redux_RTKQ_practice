@@ -9,7 +9,8 @@ import {
 } from './service/tokenSlice.js';
 import { useGetUserMutation } from './service/userSlice.js';
 import AlbumList from './component/AlbumList.jsx';
-import { useCallback, useEffect, useState } from 'react';
+// import EmojiRain from './component/EmojiRain.jsx';
+import { useEffect } from 'react';
 
 function App() {
 	const [getToken] = useGetTokenMutation();
@@ -81,8 +82,6 @@ function App() {
 		};
 	}, [accessToken, refreshToken, getUser, getToken]);
 
-	useEffect(() => {});
-
 	async function logout() {
 		localStorage.clear();
 		window.location.href = REDIRECT_URL;
@@ -91,7 +90,8 @@ function App() {
 	return (
 		<>
 			<Provider store={store}>
-				<div className="grid grid-cols-layout gap-0">
+				<div className="relative grid grid-cols-layout gap-0">
+					{/* <EmojiRain /> */}
 					<Sider
 						display_name={user?.name}
 						images={user?.images}
